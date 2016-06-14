@@ -1,0 +1,6 @@
+framework module Pods_nsfw {
+  umbrella header "Pods-nsfw-umbrella.h"
+
+  export *
+  module * { export * }
+}
