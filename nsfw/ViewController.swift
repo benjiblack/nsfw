@@ -22,7 +22,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     let width = UIScreen.mainScreen().bounds.width
     var boards = [String]()
     var data: JSON?
-    var imageArray = [UIImage?]()
+    var imageArray = [String?]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +51,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 self.boardTableVw.reloadData()
             }
         }
+        showSideBar()
     }
     
     func addSwipe() {
@@ -118,6 +119,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 self.data = check
                 self.imageArray.removeAll()
                 self.downloadImage(self.boards[indexPath.row])
+                self.catalogCollectionVw.reloadData()
+                self.catalogCollectionVw.scrollToItemAtIndexPath(NSIndexPath(forItem: 1, inSection: 0), atScrollPosition: .Top, animated: false)
             }
         }
         hideSideBar()
@@ -140,7 +143,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if data == nil {
             return cell
         }
-        cell.imageCell.image = imageArray[indexPath.row]
+        Alamofire.request(.GET, imageArray[indexPath.row]!).responseImage {
+            response in
+            if let image = response.result.value {
+                cell.imageCell.image = image
+            } else {
+                cell.imageCell.image = nil
+            }
+        }
         return cell
     }
     
@@ -149,15 +159,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         for y in 0 ..< total {
             let size = data![y]["threads"].count
             for x in 0 ..< size {
-                self.imageArray.append(nil)
-                let url = "https://i.4cdn.org/" + board + "/" + String(data![y]["threads"][x]["tim"]) + "s.jpg"
-                let index = self.imageArray.count - 1
-                Alamofire.request(.GET, url).responseImage {
-                    response in
-                    if let image = response.result.value {
-                        self.imageArray[index] = image
-                        self.catalogCollectionVw.reloadData()
-                    }
+                if data![y]["threads"][x]["tim"] == nil {
+                    self.imageArray.append("")
+                } else {
+                    let url = "https://i.4cdn.org/" + board + "/" + String(data![y]["threads"][x]["tim"]) + "s.jpg"
+                    self.imageArray.append(url)
                 }
             }
         }
