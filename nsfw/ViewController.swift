@@ -20,7 +20,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     let api = Api()
     let width = UIScreen.mainScreen().bounds.width
-    var boards = [String]()
+    var boards = [[String]]()
     var data: JSON?
     var imageArray = [String?]()
     
@@ -106,19 +106,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = boardTableVw.dequeueReusableCellWithIdentifier("boardCell", forIndexPath: indexPath)
-        cell.textLabel?.text = "/" + self.boards[indexPath.row] + "/"
+        cell.textLabel?.text = "/" + self.boards[indexPath.row][1] + "/"
         cell.backgroundColor = UIColor.clearColor()
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let url = "https://a.4cdn.org/" + boards[indexPath.row] + "/catalog.json"
+        let url = "https://a.4cdn.org/" + boards[indexPath.row][1] + "/catalog.json"
+        self.title = boards[indexPath.row][0]
         api.getInfo(url) {
             completion in
             if let check = completion {
                 self.data = check
                 self.imageArray.removeAll()
-                self.downloadImage(self.boards[indexPath.row])
+                self.downloadImage(self.boards[indexPath.row][1])
                 self.catalogCollectionVw.reloadData()
                 self.catalogCollectionVw.scrollToItemAtIndexPath(NSIndexPath(forItem: 1, inSection: 0), atScrollPosition: .Top, animated: false)
             }

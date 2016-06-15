@@ -12,8 +12,7 @@ import SwiftyJSON
 
 class Api: NSObject {
     
-    var boards = [String]()
-//    let url = "https://a.4cdn.org/gif/catalog.json"
+    var boards = [[String]]()
     
     func getInfo(url: String, completion: JSON? -> Void) {
         Alamofire.request(.GET, url).validate().responseJSON {
@@ -22,9 +21,6 @@ class Api: NSObject {
             case .Success:
                 if let value = response.result.value {
                     let json = JSON(value)
-//                    print(String(json[0]["threads"][0]["tim"]))
-//                    print(json[0]["threads"][0]["ext"].string!)
-//                    let img = String(json[0]["threads"][0]["tim"]) + json[0]["threads"][0]["ext"].string!
                     completion(json)
                 }
             case .Failure(let error):
@@ -33,7 +29,7 @@ class Api: NSObject {
         }
     }
     
-    func getBoards (completion: [String]? -> Void) {
+    func getBoards (completion: [[String]]? -> Void) {
         let boardUrl = "https://a.4cdn.org/boards.json"
         Alamofire.request(.GET, boardUrl).validate().responseJSON {
             response in
@@ -43,7 +39,8 @@ class Api: NSObject {
                     let json = JSON(value)
                     let size = json["boards"].count
                     for x in 0 ..< size {
-                        self.boards.append(json["boards"][x]["board"].string!)
+                        let elem = [json["boards"][x]["title"].string!, json["boards"][x]["board"].string!]
+                        self.boards.append(elem)
                     }
                     completion(self.boards)
                 }
