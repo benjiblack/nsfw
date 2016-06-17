@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class Api: NSObject {
     
-    var boards = [[String]]()
+    var boards = [[String : String]]()
     
     func getInfo(url: String, completion: JSON? -> Void) {
         Alamofire.request(.GET, url).validate().responseJSON {
@@ -29,7 +29,7 @@ class Api: NSObject {
         }
     }
     
-    func getBoards (completion: [[String]]? -> Void) {
+    func getBoards (completion: [[String : String]]? -> Void) {
         let boardUrl = "https://a.4cdn.org/boards.json"
         Alamofire.request(.GET, boardUrl).validate().responseJSON {
             response in
@@ -39,7 +39,8 @@ class Api: NSObject {
                     let json = JSON(value)
                     let size = json["boards"].count
                     for x in 0 ..< size {
-                        let elem = [json["boards"][x]["title"].string!, json["boards"][x]["board"].string!]
+                        let elem = ["title": json["boards"][x]["title"].string!,
+                                    "board": json["boards"][x]["board"].string!]
                         self.boards.append(elem)
                     }
                     completion(self.boards)

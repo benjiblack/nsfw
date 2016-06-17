@@ -11,4 +11,5 @@ import UIKit
 class CustomCell: UICollectionViewCell {
     
     @IBOutlet weak var imageCell: UIImageView!
+    @IBOutlet weak var textCell: UITextView!
 }

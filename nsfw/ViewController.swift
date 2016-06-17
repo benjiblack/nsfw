@@ -12,7 +12,7 @@ import Alamofire
 import SwiftGifOrigin
 import SwiftyJSON
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet var sideBar: UIView!
     @IBOutlet weak var boardTableVw: UITableView!
@@ -20,9 +20,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     let api = Api()
     let width = UIScreen.mainScreen().bounds.width
-    var boards = [[String]]()
+    var boards = [[String: String]]()                   /* keys: board, title */
+    var content = [[String: String]]()                  /* Keys: url, com */
     var data: JSON?
-    var imageArray = [String?]()
+    
+    // Mark: - Data for collectionView
+    private let leftAndRightPaddings: CGFloat = 8.0
+    private let numberOfItemPerRow: CGFloat = 3.0
+    private let heightAdjustmen: CGFloat = 30.0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,27 +105,27 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    /* ========== TABLE VIEW ========== */
+    // MARK: - tableView
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.boards.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = boardTableVw.dequeueReusableCellWithIdentifier("boardCell", forIndexPath: indexPath)
-        cell.textLabel?.text = "/" + self.boards[indexPath.row][1] + "/"
+        cell.textLabel?.text = "/" + self.boards[indexPath.row]["board"]! + "/"
         cell.backgroundColor = UIColor.clearColor()
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let url = "https://a.4cdn.org/" + boards[indexPath.row][1] + "/catalog.json"
-        self.title = boards[indexPath.row][0]
+        let url = "https://a.4cdn.org/" + boards[indexPath.row]["board"]! + "/catalog.json"
+        self.title = boards[indexPath.row]["title"]
         api.getInfo(url) {
             completion in
             if let check = completion {
                 self.data = check
-                self.imageArray.removeAll()
-                self.downloadImage(self.boards[indexPath.row][1])
+                self.content.removeAll()
+                self.downloadImage(self.boards[indexPath.row]["board"]!)
                 self.catalogCollectionVw.reloadData()
                 self.catalogCollectionVw.scrollToItemAtIndexPath(NSIndexPath(forItem: 1, inSection: 0), atScrollPosition: .Top, animated: false)
             }
@@ -127,7 +133,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         hideSideBar()
     }
     
-    /* ========== COLLECTION VIEW ========== */
+    // MARK: - collectionView
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var ret = 0
         if let check = data {
@@ -139,12 +145,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return ret
     }
     
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 2
+    }
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = catalogCollectionVw.dequeueReusableCellWithReuseIdentifier("imageCell", forIndexPath: indexPath) as! CustomCell
         if data == nil {
             return cell
         }
-        Alamofire.request(.GET, imageArray[indexPath.row]!).responseImage {
+        
+        Alamofire.request(.GET, content[indexPath.row]["url"]!).responseImage {
             response in
             if let image = response.result.value {
                 cell.imageCell.image = image
@@ -152,6 +163,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 cell.imageCell.image = nil
             }
         }
+        cell.textCell.text = content[indexPath.row]["com"]
+        cell.textCell.textColor = UIColor.whiteColor()
+        cell.textCell.backgroundColor = UIColor.clearColor()
+        cell.imageCell.backgroundColor = UIColor.clearColor()
         return cell
     }
     
@@ -160,12 +175,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         for y in 0 ..< total {
             let size = data![y]["threads"].count
             for x in 0 ..< size {
-                if data![y]["threads"][x]["tim"] == nil {
-                    self.imageArray.append("")
-                } else {
-                    let url = "https://i.4cdn.org/" + board + "/" + String(data![y]["threads"][x]["tim"]) + "s.jpg"
-                    self.imageArray.append(url)
+                var elem = ["url": "", "com": ""]
+                if data![y]["threads"][x]["tim"] != nil {
+                    elem["url"] = "https://i.4cdn.org/" + board + "/" + String(data![y]["threads"][x]["tim"]) + "s.jpg"
                 }
+                if data![y]["threads"][x]["com"] != nil {
+                    elem["com"] = data![y]["threads"][x]["com"].string
+                }
+                self.content.append(elem)
             }
         }
     }

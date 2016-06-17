@@ -20,6 +20,7 @@
 		9382A07F1D0DAE7E0059E202 /* nsfwTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9382A07E1D0DAE7E0059E202 /* nsfwTests.swift */; };
 		9382A08A1D0DAE7E0059E202 /* nsfwUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9382A0891D0DAE7E0059E202 /* nsfwUITests.swift */; };
 		93F0ABF31D0DB40D00580C9A /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F0ABF21D0DB40D00580C9A /* Api.swift */; };
+		93FAE8CD1D1448AB00FD48F7 /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FAE8CC1D1448AB00FD48F7 /* CustomLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		9382A0891D0DAE7E0059E202 /* nsfwUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nsfwUITests.swift; sourceTree = "<group>"; };
 		9382A08B1D0DAE7E0059E202 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93F0ABF21D0DB40D00580C9A /* Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
+		93FAE8CC1D1448AB00FD48F7 /* CustomLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
 		F2FC2723F6B699AB2830CD00 /* Pods-nsfw.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nsfw.release.xcconfig"; path = "Pods/Target Support Files/Pods-nsfw/Pods-nsfw.release.xcconfig"; sourceTree = "<group>"; };
 		F9DBDB1DEDBCA5326E0398A8 /* Pods_nsfwTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nsfwTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -133,6 +135,7 @@
 				9382A0691D0DAE7E0059E202 /* AppDelegate.swift */,
 				93F0ABF21D0DB40D00580C9A /* Api.swift */,
 				933D49341D0EFABE00FB9A70 /* CustomCell.swift */,
+				93FAE8CC1D1448AB00FD48F7 /* CustomLayout.swift */,
 				9382A06B1D0DAE7E0059E202 /* ViewController.swift */,
 				93311BC91D10055E00945611 /* loadImage.swift */,
 				9382A06D1D0DAE7E0059E202 /* Main.storyboard */,
@@ -436,6 +439,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93FAE8CD1D1448AB00FD48F7 /* CustomLayout.swift in Sources */,
 				93F0ABF31D0DB40D00580C9A /* Api.swift in Sources */,
 				9382A06C1D0DAE7E0059E202 /* ViewController.swift in Sources */,
 				933D49351D0EFABE00FB9A70 /* CustomCell.swift in Sources */,
