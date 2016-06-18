@@ -20,25 +20,3 @@ func loadGif(data: String) -> UIImage? {
     }
     return nil
 }
-
-
-func loadImage(data: String) -> UIImage? {
-    let strUrl = data
-    if let url = NSURL(string: strUrl) {
-        if let data = NSData(contentsOfURL: url) {
-            return UIImage(data: data)
-        }
-    }
-    return nil
-}
-
-func downloadContent(data: JSON, board: String) -> [UIImage?] {
-    let size = data[0]["threads"].count
-    var array = [UIImage?]()
-    for x in 0 ..< size {
-        var url = "https://i.4cdn.org/" + board + "/"
-        url += String(data[0]["threads"][x]["tim"]) + "s.jpg"
-        array.append(loadImage(url))
-    }
-    return array
-}

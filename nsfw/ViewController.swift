@@ -14,6 +14,7 @@ import SwiftyJSON
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var collectionLayout: UICollectionViewFlowLayout!
     @IBOutlet var sideBar: UIView!
     @IBOutlet weak var boardTableVw: UITableView!
     @IBOutlet weak var catalogCollectionVw: UICollectionView!
@@ -25,13 +26,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var data: JSON?
     
     // Mark: - Data for collectionView
-    private let leftAndRightPaddings: CGFloat = 8.0
+    private let leftAndRightPaddings: CGFloat = 32.0    /* 8.0 space between tiles */
     private let numberOfItemPerRow: CGFloat = 3.0
-    private let heightAdjustmen: CGFloat = 30.0
+    private let heightAdjustment: CGFloat = 30.0
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let collectionWidth = (width - leftAndRightPaddings) / numberOfItemPerRow
+        collectionLayout.itemSize = CGSizeMake(collectionWidth, collectionWidth + heightAdjustment)
         initView()
         addSwipe()
     }
@@ -144,11 +148,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         return ret
     }
-    
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 2
-    }
-    
+        
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = catalogCollectionVw.dequeueReusableCellWithReuseIdentifier("imageCell", forIndexPath: indexPath) as! CustomCell
         if data == nil {
@@ -170,6 +170,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
+    // MARK: - Dowaload function
     func downloadImage(board: String) {
         let total = data!.count
         for y in 0 ..< total {

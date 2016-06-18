@@ -35,14 +35,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rx7-AM-QPD">
-                                                    <rect key="frame" x="0.0" y="0.0" width="180" height="102"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="180" height="139"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </imageView>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WcX-VV-CLn">
-                                                    <rect key="frame" x="8" y="102" width="164" height="70"/>
+                                                    <rect key="frame" x="8" y="139" width="164" height="33"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="70" id="v3z-ho-ydv"/>
+                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="70" id="v3z-ho-ydv"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -50,7 +50,6 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="Rx7-AM-QPD" secondAttribute="trailing" id="4N2-4t-hgy"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="WcX-VV-CLn" secondAttribute="bottom" id="7q7-TH-quQ"/>
@@ -83,6 +82,7 @@
                     <connections>
                         <outlet property="boardTableVw" destination="TTt-tQ-rVH" id="Mrn-Fp-uRZ"/>
                         <outlet property="catalogCollectionVw" destination="yc9-eG-fCA" id="uYc-Mi-RpO"/>
+                        <outlet property="collectionLayout" destination="JEO-NR-KOK" id="eGU-TN-OfF"/>
                         <outlet property="sideBar" destination="JqL-k0-3OB" id="tMH-X1-kb7"/>
                     </connections>
                 </viewController>
