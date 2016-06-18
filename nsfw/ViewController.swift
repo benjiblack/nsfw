@@ -16,6 +16,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var collectionLayout: UICollectionViewFlowLayout!
     @IBOutlet var sideBar: UIView!
+    @IBOutlet var blurView: UIView!
     @IBOutlet weak var boardTableVw: UITableView!
     @IBOutlet weak var catalogCollectionVw: UICollectionView!
     
@@ -48,6 +49,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.view.backgroundColor = UIColor(patternImage: UIImage(imageLiteral: "background"))
         sideBar.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
         sideBar.translatesAutoresizingMaskIntoConstraints = false
+        blurView.backgroundColor = UIColor.clearColor()
+        blurView.translatesAutoresizingMaskIntoConstraints = false
         boardTableVw.dataSource = self
         boardTableVw.delegate = self
         boardTableVw.backgroundColor = UIColor.clearColor()
@@ -64,6 +67,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         showSideBar()
     }
     
+    // MARK: - Gesture Recognizer
     func addSwipe() {
         let swipeRigt = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipe))
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipe))
@@ -85,7 +89,34 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+
+    // MARK: - External views handling
+    func showBlurView() {
+        view.addSubview(blurView)
+        let bottomConstraint = blurView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor)
+        let leftConstraint = blurView.leftAnchor.constraintEqualToAnchor(view.leftAnchor)
+        let topConstraint = blurView.topAnchor.constraintEqualToAnchor(view.topAnchor)
+        let rightConstraint = blurView.rightAnchor.constraintEqualToAnchor(view.rightAnchor)
+        NSLayoutConstraint.activateConstraints([bottomConstraint, leftConstraint, topConstraint, rightConstraint])
+        view.layoutIfNeeded()
+        self.blurView.alpha = 0
+        UIView.animateWithDuration(0.3) {
+            self.blurView.alpha = 1
+        }
+    }
+    
+    func hideBlurView() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.blurView.alpha = 0
+        }) { completed in
+            if completed == true {
+                self.blurView.removeFromSuperview()
+            }
+        }
+    }
+    
     func showSideBar() {
+        showBlurView()
         view.addSubview(sideBar)
         let bottomConstraint = sideBar.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor)
         let leftConstraint = sideBar.leftAnchor.constraintEqualToAnchor(view.leftAnchor)
@@ -100,11 +131,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func hideSideBar() {
+        hideBlurView()
         UIView.animateWithDuration(0.3, animations: {
             self.sideBar.center.x -= self.width / 3
         }) { completed in
             if completed == true {
                 self.sideBar.removeFromSuperview()
+                self.hideBlurView()
             }
         }
     }

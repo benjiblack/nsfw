@@ -80,6 +80,7 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="Hsk-Vs-95A"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="blurView" destination="qZm-vG-hbR" id="wFF-87-q5m"/>
                         <outlet property="boardTableVw" destination="TTt-tQ-rVH" id="Mrn-Fp-uRZ"/>
                         <outlet property="catalogCollectionVw" destination="yc9-eG-fCA" id="uYc-Mi-RpO"/>
                         <outlet property="collectionLayout" destination="JEO-NR-KOK" id="eGU-TN-OfF"/>
@@ -91,11 +92,12 @@
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y9t-qR-h4q">
+                        <visualEffectView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y9t-qR-h4q">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Tj9-VD-Mi1">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <blurEffect style="light"/>
                         </visualEffectView>
