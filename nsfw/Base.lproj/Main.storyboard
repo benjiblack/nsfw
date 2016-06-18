@@ -87,6 +87,27 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="qZm-vG-hbR" userLabel="BlurView">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y9t-qR-h4q">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Tj9-VD-Mi1">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </view>
+                            <blurEffect style="light"/>
+                        </visualEffectView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Y9t-qR-h4q" secondAttribute="trailing" id="Vph-DY-62r"/>
+                        <constraint firstItem="Y9t-qR-h4q" firstAttribute="leading" secondItem="qZm-vG-hbR" secondAttribute="leading" id="iRD-M2-N3t"/>
+                        <constraint firstAttribute="bottom" secondItem="Y9t-qR-h4q" secondAttribute="bottom" id="tBC-lW-qVv"/>
+                        <constraint firstItem="Y9t-qR-h4q" firstAttribute="top" secondItem="qZm-vG-hbR" secondAttribute="top" id="yeO-fT-qhE"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" id="JqL-k0-3OB" userLabel="SideBar">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
