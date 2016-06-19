@@ -203,6 +203,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        print("Selected item:", content[indexPath.row]["com"]!)
+    }
+    
     // MARK: - Dowaload function
     func downloadImage(board: String) {
         let total = data!.count
