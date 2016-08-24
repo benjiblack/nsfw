@@ -89,7 +89,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-
     // MARK: - External views handling
     func showBlurView() {
         view.addSubview(blurView)
@@ -204,10 +203,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("Selected item:", content[indexPath.row]["com"]!)
+        performSegueWithIdentifier("contentSegue", sender: collectionView.cellForItemAtIndexPath(indexPath))
+        collectionView.deselectItemAtIndexPath(indexPath, animated: true)
     }
     
-    // MARK: - Dowaload function
+    // MARK: - Download function
     func downloadImage(board: String) {
         let total = data!.count
         for y in 0 ..< total {
@@ -222,6 +222,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 }
                 self.content.append(elem)
             }
+        }
+    }
+    
+    // MARK: - Segue
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "contentSegue" {
+            let cell = sender as! UICollectionViewCell
+            let i: Int = (self.catalogCollectionVw!.indexPathForCell(cell)?.row)!
+            let new = segue.destinationViewController as! contentViewController
+            new.content = self.content
+            new.index = i
         }
     }
 }
